@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
@@ -132,13 +132,13 @@ def main():
         }
 
     test_dict['version'] = get_version()
-    if not test_dict['version'] in test_dict['valid_tests'].keys():
+    if not test_dict['version'] in list(test_dict['valid_tests'].keys()):
         print("Exiting: No tests specified for your software version: %s" %
             (test_dict['version']))
         return 1
 
     try:
-        raw_input("Press <Enter> to Begin Smoke Test\n")
+        input("Press <Enter> to Begin Smoke Test\n")
     except Exception:
         print("\nExiting.")
         return 1
@@ -150,7 +150,7 @@ def main():
                  cur_time.tm_year, test_dict['version'],)
                 )
     if args.test == None:
-        print 'Performing All Tests'
+        print('Performing All Tests')
         ros_init()
         for t in test_dict['valid_tests'][test_dict['version']]:
             run_test(t, filename, args.proceed)
