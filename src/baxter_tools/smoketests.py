@@ -33,7 +33,7 @@ Baxter RSDK Smoke Tests
 
 import traceback
 import threading
-import Queue
+import queue
 
 import rospy
 
@@ -229,7 +229,7 @@ class Head(SmokeTest):
             head.set_pan(-1.0, 0.05)
             head.set_pan(0.0, 0.05)
             print("Test: Nod Head")
-            for _ in xrange(3):
+            for _ in range(3):
                 head.command_nod()
             print("Test: Display Image on Screen - 5 seconds")
             image_path = (self._rp.get_path('baxter_tools') +
@@ -268,7 +268,7 @@ class MoveArms(SmokeTest):
             try:
                 limb.move_to_joint_positions(angle, timeout)
                 queue.put(None)
-            except Exception, exception:
+            except Exception as exception:
                 queue.put(traceback.format_exc())
                 queue.put(exception)
 
@@ -278,8 +278,8 @@ class MoveArms(SmokeTest):
             print("Test: Create Limb Instances")
             right = baxter_interface.Limb('right')
             left = baxter_interface.Limb('left')
-            left_queue = Queue.Queue()
-            right_queue = Queue.Queue()
+            left_queue = queue.Queue()
+            right_queue = queue.Queue()
             # Max Joint Range (s0, s1, e0, e1, w0, w1, w2)
             #     ( 1.701,  1.047,  3.054,  2.618,  3.059,  2.094,  3.059)
             # Min Joint Range (e0, e1, s0, s1, w0, w1, w2)
@@ -296,14 +296,14 @@ class MoveArms(SmokeTest):
                 left_thread = threading.Thread(
                     target=move_thread,
                     args=(left,
-                          dict(zip(left.joint_names(), move)),
+                          dict(list(zip(left.joint_names(), move))),
                           left_queue
                           )
                 )
                 right_thread = threading.Thread(
                     target=move_thread,
                     args=(right,
-                          dict(zip(right.joint_names(), move)),
+                          dict(list(zip(right.joint_names(), move))),
                           right_queue
                           )
                 )
