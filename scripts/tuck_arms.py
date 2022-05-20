@@ -77,11 +77,11 @@ class Tuck(object):
                        }
             }
         self._collide_lsub = rospy.Subscriber(
-                             'robot/limb/left/collision_avoidance_state',
+                             '/robot/limb/left/collision_avoidance_state',
                              CollisionAvoidanceState,
                              self._update_collision, 'left')
         self._collide_rsub = rospy.Subscriber(
-                             'robot/limb/right/collision_avoidance_state',
+                             '/robot/limb/right/collision_avoidance_state',
                              CollisionAvoidanceState,
                              self._update_collision, 'right')
         self._disable_pub = {
